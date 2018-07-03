@@ -49,7 +49,7 @@ export default {
   margin-top: .2rem;
   word-break: keep-all;
   font-size: 0;
-  overflow-x: hidden;
+  overflow: hidden;
   .header{
     width: 50%;
     

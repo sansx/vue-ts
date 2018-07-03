@@ -71,11 +71,16 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style>
     h2{
         font-size: .3rem;
         margin: 0.1rem 0 .1rem 0;
     }
+
+</style>
+
+<style lang="scss" scoped>
+    
     .contain{
         width: 100%;
     }

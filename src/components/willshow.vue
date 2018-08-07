@@ -15,6 +15,7 @@ div.contain
                     div.casts
                         span(v-for="cast,index in item.casts" :key="index") {{cast.name}}
                     div.allinfo {{showsummary(item.id)}}
+                    //- .upyear {{item.year}}
 </template>
 
 
@@ -22,6 +23,7 @@ div.contain
 
 <script>
 import imgurl from "../units/urlload.js"
+import { resolve } from 'url';
 export default {
     data(){
         return {
@@ -64,7 +66,7 @@ export default {
             //         this.$store.commit('wlistadd',res.data)
             //     })
             // })
-            this.$http.get(`/api/coming_soon?count=${20}`)
+            this.$http.get(`/api/coming_soon?count=${1}`)
             .then(res=>{
                 
                 console.log(res.data)
@@ -80,15 +82,27 @@ export default {
     methods:{
         imgurl,
         showsummary(el){
-            // this.$http.get(`/api/subject/${el}`)
-            // .then(res=>{return res.data.summary})
+            let text = ""
+            // new Promise(resolve=>{
+                this.$http.get(`/api/subject/${el}`)
+                .then(res=>{
+                    console.log(res);
+                    text = res.data.summary
+                    //return resolve(res.data.summary)
+                })
+            // }).then(res=>{return res})
+            while (text.length>0) {
+                console.log(text)
+                return text
+            }
             
         },
         jumpto(el){
             console.log(el);
             window.open(el,"_blank")
         },
-    }
+    },
+    computed:{}
 }
 </script>
 

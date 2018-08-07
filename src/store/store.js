@@ -4,7 +4,9 @@ import Vuex from "vuex"
 Vue.use(Vuex)
 
 const state = {
-    lists:{}
+    lists:{},
+    wshowlist:{},
+    hotlist:{}
 }
 const getters = {
 
@@ -12,7 +14,12 @@ const getters = {
 
 
 const mutations = {
-
+    hlistadd(state,n){
+        state.hotlist = n
+    },
+    wlistadd(state,n){
+        state.wshowlist = n
+    }
 }
 
 const actions = {

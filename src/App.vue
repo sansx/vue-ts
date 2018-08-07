@@ -40,6 +40,9 @@ export default {
 </script>
 
 <style lang="scss">
+html{
+  background: #e2e2e2;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -83,9 +86,21 @@ export default {
     justify-content: center;
     align-items: center;
     background: #d6e6f7;
+    
+  }
+  .nav{
+    margin-bottom: .2rem;
+    box-shadow: 0 4px 8px #bbbbbb;
   }
   .select{
     border-bottom: 0.01rem solid #2c3e50;
+    font-weight: bold;
+    >a{
+      letter-spacing: .04rem;
+      text-indent: .04rem;
+      font-size: .26rem;
+      text-shadow: 1px 1px 1px #808080;
+    }
   }
 }
 </style>

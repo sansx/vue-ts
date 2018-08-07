@@ -1,7 +1,7 @@
 <template lang="pug">
 div.contain
     h2(v-if="items.length>0") {{title}}一共{{num}}部
-    h2(v-else) 加载中....
+    h2(v-else) {{loadinfo}}
     el-row.box
         el-col(v-for="item,index in items" class="info" :key="index" @mouseover.native="tohide(item)" @mouseout.native="toshow(item)" :span=6 @click="jumpto(item.alt)") 
             img( :src= "imgurl(item.images.large)" v-if="item.images.large!='undefined'")
@@ -28,6 +28,7 @@ div.contain
 <script>
 import { mapState,mapMutations} from "vuex"
 import imgurl from "../units/urlload.js"
+import { setTimeout, clearInterval } from 'timers';
 export default {
     data(){
         return {
@@ -35,24 +36,58 @@ export default {
             items:[],
             title:"",
             num:"",
+            loading:false,
+            loadinfo:"加载中"
             
         }
     },
     created(){
-        this.$http.get(`/api/in_theaters?city=温州`)
-        .then(res=>{
-            this.$http.get(`/api/in_theaters?city=温州&count=${res.data.total}`)
+        if (this.$store.state.hotlist.total) {
+            let res = this.$store.state.hotlist
+            this.items = res.subjects
+            this.title = res.title
+            this.num  = res.total
+        }else{
+            let that = this 
+            function loadanime(time){
+            
+                let baseinfo = that.loadinfo
+                
+                
+                let timer = setInterval(()=>{
+                    if (!that.loading) {
+                        window.clearInterval(timer)
+                        that.loadinfo = baseinfo
+                    }
+                    that.loadinfo.length-baseinfo.length<3?that.loadinfo = that.loadinfo+".":that.loadinfo = baseinfo
+                },time)
+                
+                
+            }
+            this.loading = true
+            loadanime(500)
+            this.$http.get(`/api/in_theaters?city=温州`)
             .then(res=>{
-                this.title = res.data.title;
-                [...res.data.subjects].forEach(el=>{
+                this.$http.get(`/api/in_theaters?city=温州&count=${res.data.total}`)
+                .then(res=>{
+                    this.title = res.data.title;
+                    [...res.data.subjects].forEach(el=>{
+                        
+                        el.showdetal = false
+                        this.items.push(el)
+                    })
+                    this.num = res.data.count
+                    // console.log(this.$store.state.hotlist.total);
                     
-                    el.showdetal = false
-                    this.items.push(el)
+                    //this.$store.state.wshowlist = 
+                    this.$store.commit('hlistadd',res.data)
+                    // console.log(res.data)
+                    this.loading = false
                 })
-                this.num = res.data.count
-                console.log(res.data)
             })
-        })
+            
+        }
+        
     },
     methods:{
         imgurl,
@@ -65,16 +100,20 @@ export default {
         jumpto(el){
             console.log(el);
             window.open(el,"_blank")
-        }
+        },
         
-    }
+        
+    },
+    
 }
 </script>
 
 <style>
     h2{
         font-size: .3rem;
-        margin: 0.1rem 0 .1rem 0;
+        margin: 0.4rem 0;
+        font-weight: bold;
+        color: #909090;
     }
 
 </style>

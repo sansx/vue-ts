@@ -1,6 +1,6 @@
 <template lang="pug">
 div.contain
-    h2.load(v-if="items.length<=0") 正在加载...
+    h2.load(v-if="items.length<=0") {{loadinfo}}
     el-row
         el-col.box(v-for="item,index in items" :key="index" )
             .ncontain
@@ -8,7 +8,7 @@ div.contain
                     img( :src= "imgurl(item.images.large)" v-if="item.images.large!='undefined'")
                 .rightcontain 
                     div.mvinfo
-                        span.mvtitle(:title="item.title") {{item.title}}
+                        span.mvtitle(:title="item.title" @click="jumpto(item.alt)") {{item.title}}
                         span.direc( v-if="item.directors.length==0") 暂无信息
                         span.direc( v-else ) 导:
                             span(v-for="direc,index in item.directors" :key="index" ) {{direc.name}}  
@@ -26,20 +26,53 @@ export default {
     data(){
         return {
             items:"",
-            
+            loading:false,
+            loadinfo:"加载中"
         }
     },
     created(){
-        this.$http.get("/api/coming_soon")
-        .then(res=>{
-            //console.log(res)
-            this.$http.get(`/api/coming_soon?count=${res.data.total}`)
+        let that = this 
+        function loadanime(time){
+        
+            let baseinfo = that.loadinfo
+            
+            
+            let timer = setInterval(()=>{
+                if (!that.loading) {
+                    window.clearInterval(timer)
+                    that.loadinfo = baseinfo
+                }
+                that.loadinfo.length-baseinfo.length<3?that.loadinfo = that.loadinfo+".":that.loadinfo = baseinfo
+            },time)
+            
+            
+        }
+        this.loading = true
+        loadanime(500)
+        if (this.$store.state.wshowlist.total) {
+            let list = this.$store.state.wshowlist
+            this.items = list.subjects
+        }else{
+            // this.$http.get("/api/coming_soon")
+            // .then(res=>{
+            //     //console.log(res)
+            //     this.$http.get(`/api/coming_soon?count=${res.data.total}`)
+            //     .then(res=>{
+                    
+            //         console.log(res.data)
+            //         this.items = res.data.subjects
+            //         this.$store.commit('wlistadd',res.data)
+            //     })
+            // })
+            this.$http.get(`/api/coming_soon?count=${20}`)
             .then(res=>{
                 
                 console.log(res.data)
                 this.items = res.data.subjects
+                this.$store.commit('wlistadd',res.data)
             })
-        })
+        }
+        
     },
     computed:{
         
@@ -50,7 +83,11 @@ export default {
             // this.$http.get(`/api/subject/${el}`)
             // .then(res=>{return res.data.summary})
             
-        }
+        },
+        jumpto(el){
+            console.log(el);
+            window.open(el,"_blank")
+        },
     }
 }
 </script>

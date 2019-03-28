@@ -150,6 +150,8 @@ export default {
             font-size: .25rem;
             transform: translateX(-50%);
             background: rgba(0, 0, 0,.5);
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
         
     }

@@ -66,7 +66,7 @@ export default {
             //         this.$store.commit('wlistadd',res.data)
             //     })
             // })
-            this.$http.get(`/api/coming_soon?count=${1}`)
+            this.$http.get(`/api/coming_soon?count=${20}`)
             .then(res=>{
                 
                 console.log(res.data)

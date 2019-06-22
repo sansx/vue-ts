@@ -1,8 +1,11 @@
 import Vue from "vue";
+import './plugins/axios'
+import './plugins/vuetify'
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
+import 'vuetify/src/stylus/main.styl';
 
 Vue.config.productionTip = false;
 

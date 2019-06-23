@@ -29,6 +29,13 @@ export default {
   components: {
     HelloWorld
   },
+  created(){
+      axios.get("topstories.json?print=pretty")
+      .then(res=>{
+         console.log(res);
+         
+      })
+  },
   data () {
     return {
       //

@@ -6,11 +6,7 @@
         <span class="font-weight-light">MATERIAL DESIGN</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn
-        flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
+      <v-btn flat href="https://github.com/vuetifyjs/vuetify/releases/latest" target="_blank">
         <span class="mr-2">Latest Release</span>
       </v-btn>
     </v-toolbar>
@@ -29,20 +25,19 @@ export default {
   components: {
     HelloWorld
   },
-  created(){
-      console.log( this , this.$apis.livedata );
-      
-      this.$apis.livedata.testget()
-      .then(res=>{
-          console.log(res);
+  created() {
+
+    this.$apis.livedata.testget()
+      .then(res => {
+        console.log(res);
       })
     //   axios.get("topstories.json?print=pretty")
     //   .then(res=>{
     //      console.log(res);
-         
+
     //   })
   },
-  data () {
+  data() {
     return {
       //
     }

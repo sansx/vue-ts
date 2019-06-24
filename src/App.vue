@@ -30,11 +30,17 @@ export default {
     HelloWorld
   },
   created(){
-      axios.get("topstories.json?print=pretty")
+      console.log( this , this.$apis.livedata );
+      
+      this.$apis.livedata.testget()
       .then(res=>{
-         console.log(res);
-         
+          console.log(res);
       })
+    //   axios.get("topstories.json?print=pretty")
+    //   .then(res=>{
+    //      console.log(res);
+         
+    //   })
   },
   data () {
     return {

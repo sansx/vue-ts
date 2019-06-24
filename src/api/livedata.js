@@ -1,8 +1,7 @@
-import axios from "../plugins/axios"
+import { _axios as axios } from "../plugins/axios";
 
-export const testget = () => axios.get("topstories.json?print=pretty")
+export const testget = () => axios.get("topstories.json?print=pretty");
 
-
-export default  {
+export default {
   testget
-}
+};

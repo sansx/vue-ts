@@ -17,30 +17,37 @@
   </v-app>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
 import HelloWorld from './components/HelloWorld'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  },
-  created() {
-
-    this.$apis.livedata.testget()
-      .then(res => {
-        console.log(res);
-      })
-    //   axios.get("topstories.json?print=pretty")
-    //   .then(res=>{
-    //      console.log(res);
-
-    //   })
-  },
-  data() {
-    return {
-      //
-    }
-  }
+@Component
+export default class App extends Vue {
+  src: string = 'https://img2.vipcn.com/img2016/6/21/2016062150586477.jpg'
+  description: string = 'Saber-阿尔托莉雅·潘德拉贡'
 }
+
+// export default {
+//   name: 'App',
+//   components: {
+//     HelloWorld
+//   },
+//   created() {
+
+//     this.$apis.livedata.testget()
+//       .then(res => {
+//         console.log(res);
+//       })
+//     //   axios.get("topstories.json?print=pretty")
+//     //   .then(res=>{
+//     //      console.log(res);
+
+//     //   })
+//   },
+//   data() {
+//     return {
+//       //
+//     }
+//   }
+// }
 </script>

@@ -30,8 +30,7 @@ interface test {
   components: { HelloWorld }
 })
 export default class App extends Vue {
-  src: string = "https://img2.vipcn.com/img2016/6/21/2016062150586477.jpg";
-  description: string = "Saber-阿尔托莉雅·潘德拉贡";
+
   public $apis!: test;
 
   private created() {

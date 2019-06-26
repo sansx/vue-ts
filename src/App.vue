@@ -18,36 +18,26 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from './components/HelloWorld'
+import { Component, Vue } from "vue-property-decorator";
+import HelloWorld from "./components/HelloWorld.vue";
 
-@Component
-export default class App extends Vue {
-  src: string = 'https://img2.vipcn.com/img2016/6/21/2016062150586477.jpg'
-  description: string = 'Saber-阿尔托莉雅·潘德拉贡'
+interface test {
+  livedata?: any;
+  // age: number;
 }
 
-// export default {
-//   name: 'App',
-//   components: {
-//     HelloWorld
-//   },
-//   created() {
+@Component({
+  components: { HelloWorld }
+})
+export default class App extends Vue {
+  src: string = "https://img2.vipcn.com/img2016/6/21/2016062150586477.jpg";
+  description: string = "Saber-阿尔托莉雅·潘德拉贡";
+  public $apis!: test;
 
-//     this.$apis.livedata.testget()
-//       .then(res => {
-//         console.log(res);
-//       })
-//     //   axios.get("topstories.json?print=pretty")
-//     //   .then(res=>{
-//     //      console.log(res);
-
-//     //   })
-//   },
-//   data() {
-//     return {
-//       //
-//     }
-//   }
-// }
+  private created() {
+    this.$apis.livedata.testget().then((res: number[]) => {
+      console.log(res);
+    });
+  }
+}
 </script>

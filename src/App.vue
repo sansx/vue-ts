@@ -12,7 +12,7 @@
     </v-toolbar>
 
     <v-content>
-      <HelloWorld/>
+      <TopList></TopList>
     </v-content>
   </v-app>
 </template>
@@ -20,6 +20,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import HelloWorld from "./components/HelloWorld.vue";
+import TopList from "./components/TopList.vue";
 
 interface test {
   livedata?: any;
@@ -27,10 +28,9 @@ interface test {
 }
 
 @Component({
-  components: { HelloWorld }
+  components: { HelloWorld, TopList }
 })
 export default class App extends Vue {
-
   public $apis!: test;
 
   private created() {

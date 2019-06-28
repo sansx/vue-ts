@@ -26,10 +26,23 @@
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { watch } from 'fs';
 
 @Component
 export default class TopList extends Vue {
+  @Prop({
+    type: Array,
+    required: true
+  })public topArr!:[];
+
+  @Watch("topArr")
+  onArrChange(val: [], old: []) {
+    console.log(`new value: ${val}, old value: ${old}, get ten of Arr: ${val.slice(0,10)}`)
+  }
+
+  
+
   items = [
     { header: "Today" },
     {
@@ -58,6 +71,8 @@ export default class TopList extends Vue {
 		console.log(e);
 		
 	}
+
+  
 }
 </script>
 

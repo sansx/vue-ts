@@ -12,7 +12,7 @@
     </v-toolbar>
 
     <v-content>
-      <TopList></TopList>
+      <TopList :topArr="arrRes" ></TopList>
     </v-content>
   </v-app>
 </template>
@@ -32,10 +32,12 @@ interface test {
 })
 export default class App extends Vue {
   public $apis!: test;
+  public arrRes:any[] = []
 
   private created() {
     this.$apis.livedata.testget().then((res: number[]) => {
       console.log(res);
+      this.arrRes = res
     });
   }
 }

@@ -20,6 +20,24 @@
             </v-list-tile>
           </template>
         </v-list>
+        <v-list two-line>
+          <template v-for="(item, index) in arrBox">
+            <v-subheader v-if="item" :key="item">{{index+1}}:{{ item }}</v-subheader>
+
+            <!-- <v-divider v-else-if="item.divider" :key="index" :inset="item.inset"></v-divider> -->
+
+            <!-- <v-list-tile v-else :key="item.title" avatar @click="titleClick(item.title)">
+              <v-list-tile-avatar>
+                <img :src="item.avatar">
+              </v-list-tile-avatar>
+
+              <v-list-tile-content>
+                <v-list-tile-title v-html="item.title"></v-list-tile-title>
+                <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile> -->
+          </template>
+        </v-list>
       </v-card>
     </v-flex>
   </v-layout>
@@ -34,10 +52,15 @@ export default class TopList extends Vue {
   @Prop({
     type: Array,
     required: true
-  })public topArr!:[];
+  })public topArr!:number[];
+
+  public arrBox = []
 
   @Watch("topArr")
   onArrChange(val: [], old: []) {
+    this.arrBox = val.slice(0,10)
+    console.log(this);
+    
     console.log(`new value: ${val}, old value: ${old}, get ten of Arr: ${val.slice(0,10)}`)
   }
 

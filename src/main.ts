@@ -1,5 +1,6 @@
 // <reference path="./api/index.d.ts" />
-import Vue from "vue";
+// import Vue from "vue";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import './plugins/axios'
 import './plugins/vuetify'
 import App from "./App.vue";
@@ -11,8 +12,7 @@ import { default as test } from "./api/index"
 
 let api:any = require("./api/index.js")
 Vue.config.productionTip = false;
-<Object>Vue.prototype.$apis
-Vue.prototype.$apis = test
+// Vue.prototype.$apis = test
 // Object.defineProperties(Vue.prototype, {
 //     $apis: {
 //       get() {

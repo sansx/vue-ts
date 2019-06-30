@@ -18,25 +18,27 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Mixins } from "vue-property-decorator";
 import HelloWorld from "./components/HelloWorld.vue";
 import TopList from "./components/TopList.vue";
+import MyMixin from './Mixin'
 
-interface test {
-  livedata?: any;
-  // age: number;
-}
+
+// interface test {
+//   livedata?: any;
+//   // age: number;
+// }
 
 @Component({
   components: { HelloWorld, TopList }
 })
-export default class App extends Vue {
-  public $apis!: test;
+export default class App extends Mixins(MyMixin) {
   public arrRes:any[] = []
 
   private created() {
+    console.log(this.$apis);
+    
     this.$apis.livedata.testget().then((res: number[]) => {
-      console.log(res);
       this.arrRes = res
     });
   }

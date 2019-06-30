@@ -1,2 +1,6 @@
+export interface Index {
+    livedata?: object;
+    items?: object;
+}
 
-export const index: object;
+declare const index: Index

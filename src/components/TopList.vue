@@ -10,7 +10,7 @@
 
             <v-list-tile v-else :key="item.title" avatar @click="titleClick(item.title)">
               <v-list-tile-avatar>
-                <img :src="item.avatar">
+                <img :src="item.avatar" />
               </v-list-tile-avatar>
 
               <v-list-tile-content>
@@ -22,7 +22,7 @@
         </v-list>
         <v-list two-line>
           <template v-for="(item, index) in arrBox">
-            <v-subheader v-if="item" :key="item">{{index+1}}:{{ item }}</v-subheader>
+            <v-subheader v-if="typeof item === 'number'" :key="item">{{index+1}}:{{ item }}</v-subheader>
 
             <!-- <v-divider v-else-if="item.divider" :key="index" :inset="item.inset"></v-divider> -->
 
@@ -35,7 +35,7 @@
                 <v-list-tile-title v-html="item.title"></v-list-tile-title>
                 <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>
               </v-list-tile-content>
-            </v-list-tile> -->
+            </v-list-tile>-->
           </template>
         </v-list>
       </v-card>
@@ -45,26 +45,31 @@
 
 <script lang='ts'>
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import { watch } from 'fs';
+import { watch } from "fs";
 
 @Component
 export default class TopList extends Vue {
   @Prop({
     type: Array,
     required: true
-  })public topArr!:number[];
+  })
+  public topArr!: number[];
 
-  public arrBox = []
+  public arrBox = [];
+
+  created() {
+    console.log("!!");
+  }
 
   @Watch("topArr")
   onArrChange(val: [], old: []) {
-    this.arrBox = val.slice(0,10)
-    console.log(this);
-    
-    console.log(`new value: ${val}, old value: ${old}, get ten of Arr: ${val.slice(0,10)}`)
+    this.arrBox = val.slice(0, 10);
+    // this.arrBox.forEach(re=>{
+    //   this.$apis.
+    // })
+    console.log(`get ten of Arr: ${this.arrBox}`);
+    // console.log(`new value: ${val}, old value: ${old}, get ten of Arr: ${val.slice(0,10)}`)
   }
-
-  
 
   items = [
     { header: "Today" },
@@ -90,12 +95,9 @@ export default class TopList extends Vue {
     }
   ];
 
-	titleClick = (e:string):void => {
-		console.log(e);
-		
-	}
-
-  
+  titleClick = (e: string): void => {
+    console.log(e);
+  };
 }
 </script>
 

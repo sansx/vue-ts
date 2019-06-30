@@ -2,7 +2,7 @@
  * api接口的统一出口
  */
 
-import livedata from './livedata.js';
+import livedata from './livedata';
 import items from './items'
 // 其他模块的接口……
 

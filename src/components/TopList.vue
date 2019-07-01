@@ -10,7 +10,7 @@
 
             <v-list-tile v-else :key="item.title" avatar @click="titleClick(item.title)">
               <v-list-tile-avatar>
-                <img :src="item.avatar" />
+                <img :src="item.avatar">
               </v-list-tile-avatar>
 
               <v-list-tile-content>
@@ -22,8 +22,13 @@
         </v-list>
         <v-list two-line>
           <template v-for="(item, index) in arrBox">
-            <v-subheader v-if="typeof item === 'number'" :key="item">{{index+1}}:{{ item }}</v-subheader>
-
+            <v-subheader v-if="typeof item === 'number'" :key="item">{{index}} is loading</v-subheader>
+            <v-subheader v-else :key="item.id">
+              <a :href="item.url" target="_blank">
+                BY:{{item.by}}:
+                <p>{{ item.title }}</p>
+              </a>
+            </v-subheader>
             <!-- <v-divider v-else-if="item.divider" :key="index" :inset="item.inset"></v-divider> -->
 
             <!-- <v-list-tile v-else :key="item.title" avatar @click="titleClick(item.title)">
@@ -44,33 +49,21 @@
 </template>
 
 <script lang='ts'>
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch, Mixins } from "vue-property-decorator";
 import { watch } from "fs";
+import MyMixin from "@/Mixin";
 
 @Component
-export default class TopList extends Vue {
+export default class TopList extends Mixins(MyMixin) {
   @Prop({
     type: Array,
     required: true
   })
   public topArr!: number[];
 
-  public arrBox = [];
+  public arrBox: any[] = [];
 
-  created() {
-  }
-
-  @Watch("topArr")
-  onArrChange(val: [], old: []) {
-    this.arrBox = val.slice(0, 10);
-    // this.arrBox.forEach(re=>{
-    //   this.$apis.
-    // })
-    console.log(`get ten of Arr: ${this.arrBox}`);
-    // console.log(`new value: ${val}, old value: ${old}, get ten of Arr: ${val.slice(0,10)}`)
-  }
-
-  items = [
+  public items: any[] = [
     { header: "Today" },
     {
       avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
@@ -93,6 +86,27 @@ export default class TopList extends Vue {
         "<span class='text--primary'>Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?"
     }
   ];
+
+  created() {}
+
+  @Watch("topArr")
+  onArrChange(val: [], old: []) {
+    this.arrBox = val.slice(0, 10);
+    this.changeArr();
+  }
+
+  changeArr() {
+    this.arrBox.forEach(
+      (re: number, index: number): void => {
+        this.apis.items.itemget(re).then(res => {
+          console.log(res);
+          this.$set(this.arrBox, index, res);
+        });
+      }
+    );
+    console.log(`get ten of Arr: ${this.arrBox}`);
+    // console.log(`new value: ${val}, old value: ${old}, get ten of Arr: ${val.slice(0,10)}`)
+  }
 
   titleClick = (e: string): void => {
     console.log(e);

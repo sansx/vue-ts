@@ -1,11 +1,14 @@
 // import livedata from './livedata';
 // import items from './items'
-type CallbackFunction = () => Promise<number[]>;
+type TestgetCB = () => Promise<number[]>;
+type TtemsCB = (str:number) => Promise<object[]>;
 declare var Index : {
   livedata: {
-    testget: CallbackFunction
+    testget: TestgetCB
   },
-  items: object,
+  items: {
+    itemget:TtemsCB
+  },
 }
 
 export default Index

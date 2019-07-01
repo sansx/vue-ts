@@ -58,7 +58,6 @@ export default class TopList extends Vue {
   public arrBox = [];
 
   created() {
-    console.log("!!");
   }
 
   @Watch("topArr")

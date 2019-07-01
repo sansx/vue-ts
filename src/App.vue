@@ -36,9 +36,7 @@ export default class App extends Mixins(MyMixin) {
   public arrRes:any[] = []
 
   private created() {
-    console.log(this.$apis);
-    
-    this.$apis.livedata.testget().then((res: number[]) => {
+    this.apis.livedata.testget().then((res: number[]) => {
       this.arrRes = res
     });
   }

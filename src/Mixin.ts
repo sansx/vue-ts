@@ -7,6 +7,6 @@ import apis from "./api/index"
 @Component
 export default class MyMixin extends Vue {
   mixinValue = 'Hello'
-  $apis = apis
+  apis = apis
 }
 

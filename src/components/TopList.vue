@@ -22,7 +22,7 @@
         </v-list>
         <v-list two-line>
           <template v-for="(item, index) in arrBox">
-            <v-subheader v-if="typeof item === 'number'" :key="item">{{index}} is loading</v-subheader>
+            <v-subheader v-if="typeof item === 'number'" :key="item">{{index+1}} is loading</v-subheader>
             <v-subheader v-else :key="item.id">
               <a :href="item.url" target="_blank">
                 BY:{{item.by}}:
@@ -104,7 +104,7 @@ export default class TopList extends Mixins(MyMixin) {
         });
       }
     );
-    console.log(`get ten of Arr: ${this.arrBox}`);
+    console.log(`get ten of Arr: ${this.arrBox}!!`);
     // console.log(`new value: ${val}, old value: ${old}, get ten of Arr: ${val.slice(0,10)}`)
   }
 

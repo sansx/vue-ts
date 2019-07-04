@@ -8,9 +8,10 @@ import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
 import 'vuetify/src/stylus/main.styl';
-import { default as test } from "./api/index"
+// import { default as test } from "./api/index"
+import "./reset.css"
 
-let api:any = require("./api/index.js")
+// let api:any = require("./api/index.js")
 Vue.config.productionTip = false;
 // Vue.prototype.$apis = test
 // Object.defineProperties(Vue.prototype, {

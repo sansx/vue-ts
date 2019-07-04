@@ -23,7 +23,6 @@ import HelloWorld from "./components/HelloWorld.vue";
 import TopList from "./components/TopList.vue";
 import MyMixin from './Mixin'
 
-
 // interface test {
 //   livedata?: any;
 //   // age: number;
@@ -41,4 +40,5 @@ export default class App extends Mixins(MyMixin) {
     });
   }
 }
+
 </script>

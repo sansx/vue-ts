@@ -10,7 +10,7 @@
 
             <v-list-tile v-else :key="item.title" avatar @click="titleClick(item.title)">
               <v-list-tile-avatar>
-                <img :src="item.avatar">
+                <img :src="item.avatar" />
               </v-list-tile-avatar>
 
               <v-list-tile-content>
@@ -22,25 +22,24 @@
         </v-list>
         <v-list two-line>
           <template v-for="(item, index) in arrBox">
-            <v-subheader v-if="typeof item === 'number'" :key="item">{{index+1}} is loading</v-subheader>
+            <!-- <v-subheader v-if="typeof item === 'number'" :key="item">{{index+1}} is loading</v-subheader>
             <v-subheader v-else :key="item.id">
               <a :href="item.url" target="_blank">
                 BY:{{item.by}}:
                 <p>{{ item.title }}</p>
               </a>
-            </v-subheader>
-            <!-- <v-divider v-else-if="item.divider" :key="index" :inset="item.inset"></v-divider> -->
-
-            <!-- <v-list-tile v-else :key="item.title" avatar @click="titleClick(item.title)">
+            </v-subheader>-->
+            <v-list-tile v-if="typeof item === 'number'" :key="item">{{index+1}} is loading</v-list-tile>
+            <v-list-tile v-else :key="item.title" avatar @click="openWindow(item.url)">
               <v-list-tile-avatar>
-                <img :src="item.avatar">
+                <img :src="'https://www.gravatar.com/avatar/'+getMd5(item.by)+'?d=identicon&s=180'" />
               </v-list-tile-avatar>
-
               <v-list-tile-content>
-                <v-list-tile-title v-html="item.title"></v-list-tile-title>
-                <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>
+                <v-list-tile-title v-html="item.by"></v-list-tile-title>
+                <v-list-tile-sub-title v-html="item.title"></v-list-tile-sub-title>
               </v-list-tile-content>
-            </v-list-tile>-->
+            </v-list-tile>
+            <v-divider inset :key="index"></v-divider>
           </template>
         </v-list>
       </v-card>
@@ -52,6 +51,7 @@
 import { Component, Prop, Vue, Watch, Mixins } from "vue-property-decorator";
 import { watch } from "fs";
 import MyMixin from "@/Mixin";
+import md5 from "js-md5";
 
 @Component
 export default class TopList extends Mixins(MyMixin) {
@@ -96,16 +96,22 @@ export default class TopList extends Mixins(MyMixin) {
   }
 
   changeArr() {
-    this.arrBox.forEach(
-      (re: number, index: number): void => {
-        this.apis.items.itemget(re).then(res => {
-          console.log(res);
-          this.$set(this.arrBox, index, res);
-        });
-      }
-    );
+    this.arrBox.forEach((re: number, index: number): void => {
+      this.apis.items.itemget(re).then(res => {
+        // console.log(res);
+        this.$set(this.arrBox, index, res);
+      });
+    });
     console.log(`get ten of Arr: ${this.arrBox}!!`);
     // console.log(`new value: ${val}, old value: ${old}, get ten of Arr: ${val.slice(0,10)}`)
+  }
+
+  openWindow(url: string) {
+    window.open(url);
+  }
+
+  getMd5(str: string) {
+    return md5(str);
   }
 
   titleClick = (e: string): void => {

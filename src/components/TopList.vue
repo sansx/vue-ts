@@ -23,6 +23,15 @@
           </v-list>
         </v-card>
       </v-container>
+      <v-layout align-center justify-center row>
+        <v-progress-circular
+          :rotate="-90"
+          :size="80"
+          :width="15"
+          :value="50"
+          color="primary"
+        >{{ 50 }}</v-progress-circular>
+      </v-layout>
     </v-flex>
   </v-layout>
 </template>
@@ -41,6 +50,8 @@ export default class TopList extends Mixins(MyMixin) {
   })
   public topArr!: number[];
 
+  public totalArr!: number[];
+
   public arrBox: any[] = [];
 
   public offsetTop: string | number = 0;
@@ -49,8 +60,11 @@ export default class TopList extends Mixins(MyMixin) {
 
   @Watch("topArr")
   onArrChange(val: [], old: []) {
-    this.arrBox = val.slice(0, 10);
-    this.changeArr();
+    if (val.length > 0) {
+      this.totalArr = [...val];
+      this.arrBox = this.totalArr.splice(0, 10);
+      this.changeArr();
+    }
   }
 
   changeArr() {
@@ -73,10 +87,13 @@ export default class TopList extends Mixins(MyMixin) {
   }
 
   onScroll(e: any) {
-    const el = e.target.scrollingElement
-    this.offsetTop = e.target.scrollTop;
-    console.log(e, el.clientHeight, el.scrollHeight , el.scrollTop);
-    
+    const el = e.target.scrollingElement;
+    this.offsetTop = el.scrollTop;
+    if (el.scrollHeight - (el.clientHeight + el.scrollTop) < 100) {
+      console.log(el.scrollHeight - (el.clientHeight + el.scrollTop));
+      console.log(true);
+    }
+    console.log(e, el.clientHeight, el.scrollHeight, el.scrollTop);
   }
 
   titleClick = (e: string): void => {

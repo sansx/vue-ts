@@ -28,9 +28,9 @@
           :rotate="-90"
           :size="80"
           :width="15"
-          :value="50"
+          :value="getLoadVal"
           color="primary"
-        >{{ 50 }}</v-progress-circular>
+        >{{ getLoadVal }}</v-progress-circular>
       </v-layout>
     </v-flex>
   </v-layout>
@@ -38,7 +38,7 @@
 
 <script lang='ts'>
 import { Component, Prop, Vue, Watch, Mixins } from "vue-property-decorator";
-import { watch } from "fs";
+import { watch, promises } from "fs";
 import MyMixin from "@/Mixin";
 import md5 from "js-md5";
 
@@ -55,6 +55,10 @@ export default class TopList extends Mixins(MyMixin) {
   public arrBox: any[] = [];
 
   public offsetTop: string | number = 0;
+
+  public loading: boolean = false;
+
+  public getLoadVal: number = 0;
 
   created() {}
 
@@ -89,9 +93,30 @@ export default class TopList extends Mixins(MyMixin) {
   onScroll(e: any) {
     const el = e.target.scrollingElement;
     this.offsetTop = el.scrollTop;
-    if (el.scrollHeight - (el.clientHeight + el.scrollTop) < 100) {
+    if (
+      el.scrollHeight - (el.clientHeight + el.scrollTop) < 100 &&
+      !this.loading
+    ) {
       console.log(el.scrollHeight - (el.clientHeight + el.scrollTop));
       console.log(true);
+      this.loading = true;
+      if (this.totalArr.length) {
+        const target = this.totalArr.splice(0, 10);
+        let res: any = [];
+        target.forEach(el => {
+          res.push(
+            new Promise(resolve => {
+              this.apis.items.itemget(el).then(res => {
+                console.log(res);
+                resolve(res);
+              });
+            })
+          );
+        });
+        Promise.all(res).then(re=>{
+          this.arrBox.push(re)
+        })
+      }
     }
     console.log(e, el.clientHeight, el.scrollHeight, el.scrollTop);
   }

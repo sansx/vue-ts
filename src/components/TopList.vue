@@ -23,7 +23,7 @@
           </v-list>
         </v-card>
       </v-container>
-      <v-layout align-center justify-center row>
+      <v-layout v-if="this.loading" align-center justify-center row>
         <v-progress-circular
           :rotate="-90"
           :size="80"
@@ -108,14 +108,18 @@ export default class TopList extends Mixins(MyMixin) {
             new Promise(resolve => {
               this.apis.items.itemget(el).then(res => {
                 console.log(res);
+                this.getLoadVal += 10;
                 resolve(res);
               });
             })
           );
         });
-        Promise.all(res).then(re=>{
-          this.arrBox.push(re)
-        })
+        Promise.all(res).then(re => {
+          this.arrBox = this.arrBox.concat(re);
+          console.log(this.arrBox);
+          this.loading = false
+          this.getLoadVal = 0
+        });
       }
     }
     console.log(e, el.clientHeight, el.scrollHeight, el.scrollTop);

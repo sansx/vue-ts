@@ -1,8 +1,8 @@
 <template>
-  <v-layout row>
+  <v-layout v-scroll="onScroll" row>
     <v-flex xs12 sm6 offset-sm3>
       <v-container id="scroll-target" class="scroll-y">
-        <v-card v-scroll="onScroll">
+        <v-card>
           <v-list two-line>
             <v-subheader>top500</v-subheader>
             <template v-for="(item, index) in arrBox">
@@ -23,11 +23,14 @@
           </v-list>
         </v-card>
       </v-container>
-      <v-layout v-if="this.loading" align-center justify-center row>
+
+      <v-layout align-center justify-center row>
+        <v-btn v-if="!this.loading" color="success" @click="getLoading">click to load</v-btn>
         <v-progress-circular
+          v-if="this.loading"
           :rotate="-90"
-          :size="80"
-          :width="15"
+          :size="50"
+          :width="6"
           :value="getLoadVal"
           color="primary"
         >{{ getLoadVal }}</v-progress-circular>
@@ -66,7 +69,7 @@ export default class TopList extends Mixins(MyMixin) {
   onArrChange(val: [], old: []) {
     if (val.length > 0) {
       this.totalArr = [...val];
-      this.arrBox = this.totalArr.splice(0, 10);
+      this.arrBox = this.totalArr.splice(0, 5);
       this.changeArr();
     }
   }
@@ -98,29 +101,7 @@ export default class TopList extends Mixins(MyMixin) {
       !this.loading
     ) {
       console.log(el.scrollHeight - (el.clientHeight + el.scrollTop));
-      console.log(true);
-      this.loading = true;
-      if (this.totalArr.length) {
-        const target = this.totalArr.splice(0, 10);
-        let res: any = [];
-        target.forEach(el => {
-          res.push(
-            new Promise(resolve => {
-              this.apis.items.itemget(el).then(res => {
-                console.log(res);
-                this.getLoadVal += 10;
-                resolve(res);
-              });
-            })
-          );
-        });
-        Promise.all(res).then(re => {
-          this.arrBox = this.arrBox.concat(re);
-          console.log(this.arrBox);
-          this.loading = false
-          this.getLoadVal = 0
-        });
-      }
+      this.getLoading()
     }
     console.log(e, el.clientHeight, el.scrollHeight, el.scrollTop);
   }
@@ -128,6 +109,31 @@ export default class TopList extends Mixins(MyMixin) {
   titleClick = (e: string): void => {
     console.log(e);
   };
+
+  getLoading() {
+    this.loading = true;
+    if (this.totalArr.length) {
+      const target = this.totalArr.splice(0, 10);
+      let res: any = [];
+      target.forEach(el => {
+        res.push(
+          new Promise(resolve => {
+            this.apis.items.itemget(el).then(res => {
+              console.log(res);
+              this.getLoadVal += 10;
+              resolve(res);
+            });
+          })
+        );
+      });
+      Promise.all(res).then(re => {
+        this.arrBox = this.arrBox.concat(re);
+        console.log(this.arrBox);
+        this.loading = false;
+        this.getLoadVal = 0;
+      });
+    }
+  }
 }
 </script>
 

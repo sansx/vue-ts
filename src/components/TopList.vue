@@ -77,12 +77,9 @@ export default class TopList extends Mixins(MyMixin) {
   changeArr() {
     this.arrBox.forEach((re: number, index: number): void => {
       this.apis.items.itemget(re).then(res => {
-        console.log(res);
         this.$set(this.arrBox, index, res);
       });
     });
-    console.log(`get ten of Arr: ${this.arrBox}!!`);
-    // console.log(`new value: ${val}, old value: ${old}, get ten of Arr: ${val.slice(0,10)}`)
   }
 
   openWindow(url: string) {
@@ -103,12 +100,7 @@ export default class TopList extends Mixins(MyMixin) {
       console.log(el.scrollHeight - (el.clientHeight + el.scrollTop));
       this.getLoading()
     }
-    console.log(e, el.clientHeight, el.scrollHeight, el.scrollTop);
   }
-
-  titleClick = (e: string): void => {
-    console.log(e);
-  };
 
   getLoading() {
     this.loading = true;
@@ -119,7 +111,6 @@ export default class TopList extends Mixins(MyMixin) {
         res.push(
           new Promise(resolve => {
             this.apis.items.itemget(el).then(res => {
-              console.log(res);
               this.getLoadVal += 10;
               resolve(res);
             });
@@ -128,7 +119,6 @@ export default class TopList extends Mixins(MyMixin) {
       });
       Promise.all(res).then(re => {
         this.arrBox = this.arrBox.concat(re);
-        console.log(this.arrBox);
         this.loading = false;
         this.getLoadVal = 0;
       });

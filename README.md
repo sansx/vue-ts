@@ -1,4 +1,4 @@
-# test
+# Vue 2.x with TypeScript Test Project
 
 ## Project setup
 ```

@@ -4,6 +4,10 @@ import router from "@/router/router";
 import store from "./store";
 import "./registerServiceWorker";
 
+if (process.env.NODE_ENV === "development") {
+  require("../mock");
+}
+
 Vue.config.productionTip = false;
 
 new Vue({

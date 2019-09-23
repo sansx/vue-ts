@@ -1,4 +1,5 @@
 import { Component, Vue } from "vue-property-decorator";
+import { loginReq } from "@/api/user";
 
 @Component
 export default class LoginPage extends Vue {
@@ -6,7 +7,11 @@ export default class LoginPage extends Vue {
   public password: string | number = "";
 
   login = () => {
-    //
+    loginReq({ user_name: this.user_name, password: this.password }).then(
+      res => {
+        console.log(res.data);
+      }
+    );
   };
 
   protected render() {

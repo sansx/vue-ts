@@ -1,5 +1,6 @@
 import { Component, Vue } from "vue-property-decorator";
 import { loginReq } from "@/api/user";
+import Cookies from "js-cookie";
 
 @Component
 export default class LoginPage extends Vue {
@@ -9,7 +10,16 @@ export default class LoginPage extends Vue {
   login = () => {
     loginReq({ user_name: this.user_name, password: this.password }).then(
       res => {
-        console.log(res.data);
+        const {
+          data: { code, msg }
+        } = res;
+        if (code === 0) {
+          Cookies.set("token", "value"); // 这里实际开发中不会在这个地方写，而是抽离到路由守卫或store中
+          // 而且一般这个值不会是写死的字符串，而是从服务端返回的随机且唯一的字符串
+          this.$router.push("/home");
+        } else {
+          console.error(msg);
+        }
       }
     );
   };

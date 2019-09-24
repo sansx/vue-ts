@@ -30,7 +30,7 @@ Mock.mock(/\/api\/user\/login/, loginRes);
 
 function loginRes(req: PostResInterface) {
   const { user_name, password } = JSON.parse(req.body);
-  if (user_name === "xth" && String(password) === "123456") {
+  if (user_name === "xth" && String(password) === "123") {
     return success();
   } else {
     return error(1001, "用户名或密码错误");

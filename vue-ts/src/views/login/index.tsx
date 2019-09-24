@@ -7,7 +7,7 @@ export default class LoginPage extends Vue {
   public user_name: string = "";
   public password: string | number = "";
 
-  login = () => {
+  login() {
     loginReq({ user_name: this.user_name, password: this.password }).then(
       res => {
         const {
@@ -22,7 +22,7 @@ export default class LoginPage extends Vue {
         }
       }
     );
-  };
+  }
 
   protected render() {
     return (

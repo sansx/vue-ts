@@ -6,7 +6,6 @@
         <router-link to="/about">About</router-link>
       </div>
       <router-view />
-      <img src="./assets/logo.png" />
       <!-- <div>
         <p>
           If Ant-Design-Vue is successfully added to this project, you'll see an

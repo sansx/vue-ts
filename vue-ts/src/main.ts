@@ -3,10 +3,11 @@ import App from "./App.vue";
 import router from "@/router";
 import store from "./store";
 import "./registerServiceWorker";
-import AntVue from "ant-design-vue";
-import "ant-design-vue/dist/antd.css";
+// import AntVue from "ant-design-vue";
+// import "ant-design-vue/dist/antd.css";
+import "./plugins/ant-design-vue.js";
 
-Vue.use(AntVue);
+// Vue.use(AntVue);
 
 if (process.env.NODE_ENV === "development") {
   require("../mock");

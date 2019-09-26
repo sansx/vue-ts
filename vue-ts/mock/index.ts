@@ -36,3 +36,13 @@ function loginRes(req: PostResInterface) {
     return error(1001, "用户名或密码错误");
   }
 }
+
+Mock.mock(/\/api\/user\/get_info/, getInfoRes);
+
+function getInfoRes(req: PostResInterface) {
+  return success("", {
+    user_name: "Lison",
+    avatar: "",
+    email: "xxx@xx.com"
+  });
+}

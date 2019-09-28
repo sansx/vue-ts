@@ -19,8 +19,8 @@
         <!-- 顶部容器组件 -->
         <a-layout-header style="background: #fff;text-align: right;">
           <a-dropdown>
-            <a-avatar>USER</a-avatar>
-            <a-menu slot="overlay">
+            <a-avatar>{{ userName }}</a-avatar>
+            <a-menu @click="handleClickAvatarMenu" slot="overlay">
               <a-menu-item key="logout">退出登录</a-menu-item>
             </a-menu>
           </a-dropdown>
@@ -37,12 +37,31 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { State, Mutation } from "vuex-class";
+// 注意，这个清楚cookie中token的逻辑，最好放到store中用专门的mutation去清除store中用户信息的同时清楚token
+import Cookie from "js-cookie";
 
 @Component({
   name: "TMain"
 })
 export default class TMain extends Vue {
-  public handleClickMenu({ item, key, keyPath }) {
+  @State("user_name") public userName: any; // 将store.state.user_name赋给userName
+
+  @Mutation("setUserInfoMutations") public setUserInfo: any;
+
+  public handleClickAvatarMenu({ item, key, keyPath }: any) {
+    if (key === "logout") {
+      this.logout();
+    }
+  }
+
+  public logout() {
+    this.setUserInfo({ user_name: "", email: "" });
+    Cookie.set("token", "");
+    this.$router.push("/login");
+  }
+
+  public handleClickMenu({ item, key, keyPath }: any) {
     this.$router.push(key);
   }
 }

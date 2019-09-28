@@ -30,6 +30,8 @@ Mock.mock(/\/api\/user\/login/, loginRes);
 
 function loginRes(req: PostResInterface) {
   const { user_name, password } = JSON.parse(req.body);
+  console.log(user_name, password);
+  
   if (user_name === "xth" && String(password) === "123") {
     return success();
   } else {
@@ -41,7 +43,7 @@ Mock.mock(/\/api\/user\/get_info/, getInfoRes);
 
 function getInfoRes(req: PostResInterface) {
   return success("", {
-    user_name: "Lison",
+    user_name: "xth",
     avatar: "",
     email: "xxx@xx.com"
   });

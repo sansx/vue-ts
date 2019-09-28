@@ -20,7 +20,7 @@ interface GetInfoReqArguInterface {
   user_id: string;
 }
 export const getInfoReq = (
-  data: GetInfoReqArguInterface
+  data: GetInfoReqArguInterface = { user_id: "a" }
 ): AxiosPromise<ResponseData> => {
   return axios.request({
     url: "/api/user/get_info",

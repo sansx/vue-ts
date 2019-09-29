@@ -1,5 +1,7 @@
 <template>
   <div class="home">
+    <count-to></count-to>
+    <count-to></count-to>
   </div>
 </template>
 
@@ -7,9 +9,13 @@
 import { Component, Vue } from "vue-property-decorator";
 import { loginReq } from "@/api/user";
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import CountTo from "@/components/CountTo";
 
 @Component({
-  name: 'HomePage'
+  name: "HomePage",
+  components: {
+    CountTo
+  }
 })
 export default class Home extends Vue {}
 </script>

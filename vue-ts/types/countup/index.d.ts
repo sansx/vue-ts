@@ -1,5 +1,12 @@
 // types/countup/index.d.ts
-declare function CountUp(target: string, startVal: number, endVal: number, decimals: number, duration: number, options: any): void;
+declare function CountUp(
+  target: string,
+  startVal: number,
+  endVal: number,
+  decimals: number,
+  duration: number,
+  options: any
+): void;
 
 declare module CountUp {
   var options: CountUpOptions;
@@ -12,8 +19,41 @@ declare module CountUp {
   function update(newEndVal: number): void;
 }
 
+declare class CountUp {
+  constructor(target: string,
+    startVal: number,
+    endVal: number,
+    decimals: number,
+    duration: number,
+    options: any);
+
+//   new(
+//     target: string,
+//     startVal: number,
+//     endVal: number,
+//     decimals: number,
+//     duration: number,
+//     options: any
+//   ): CountUp;
+  options: CountUpOptions;
+  version(): string;
+  printValue(value: any): void;
+  count(timestamp: any): void;
+  start(callback?: Function): boolean;
+  pauseResume(): void;
+  reset(): void;
+  update(newEndVal: number): void;
+}
+
 interface CountUp {
-  new(target: string, startVal: number, endVal: number, decimals: number, duration: number, options: any): CountUp;
+  new (
+    target: string,
+    startVal: number,
+    endVal: number,
+    decimals: number,
+    duration: number,
+    options: any
+  ): CountUp;
   options: CountUpOptions;
   version(): string;
   printValue(value: any): void;

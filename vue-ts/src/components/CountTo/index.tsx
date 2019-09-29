@@ -5,9 +5,19 @@ import CountUp from "countup";
   name: "CountTo"
 })
 export default class CountTo extends Vue {
+  @Prop({ type: Number, default: 0 }) public readonly start!: number;
+  @Prop({ type: Number, default: 999 }) public readonly end!: number;
   public counter!: CountUp;
   public get eleId() {
     return `count_to_${(this as any)._uid}`;
+  }
+  public update(endVal: number): void {
+    this.counter.update(endVal);
+  }
+  protected mounted() {
+    this.counter = new CountUp(this.eleId, this.start, this.end, 0, 1, {});
+    // 创建CountUp实例，并保存在counter上
+    this.counter.start(); // 调用此方法让动画效果开始
   }
   protected render() {
     return (
@@ -15,10 +25,5 @@ export default class CountTo extends Vue {
         <span id={this.eleId}></span>
       </div>
     );
-  }
-  protected mounted() {
-    this.counter = new CountUp(this.eleId, 0, 1000, 0, 1, {});
-    // 创建CountUp实例，并保存在counter上
-    this.counter.start(); // 调用此方法让动画效果开始
   }
 }

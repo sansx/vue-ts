@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <count-to :start="10" :end="99999"></count-to>
-    <count-to ref="counter" :end="99999"></count-to>
+    <count-to @on-click="handleClick" ref="counter" :end="99999"></count-to>
   </div>
 </template>
 
@@ -18,6 +18,9 @@ import CountTo from "@/components/CountTo";
   }
 })
 export default class Home extends Vue {
+  public handleClick(event: DocumentEvent) {
+    console.log(event);
+  }
   protected mounted() {
     setInterval(() => {
       // this.$refs.counter as CountTo

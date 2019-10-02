@@ -7,6 +7,11 @@ import CountUp from "countup";
 export default class CountTo extends Vue {
   @Prop({ type: Number, default: 0 }) public readonly start!: number;
   @Prop({ type: Number, default: 999 }) public readonly end!: number;
+  @Emit("on-click") // 这里的on-click即为自定义事件名
+  public click(event: DocumentEvent) {
+    // 这个方法名用于组件内调用
+    return event; // return的值即为事件回调函数的参数
+  }
   public counter!: CountUp;
   public get eleId() {
     return `count_to_${(this as any)._uid}`;
@@ -21,7 +26,7 @@ export default class CountTo extends Vue {
   }
   protected render() {
     return (
-      <div class="count-up-wrap">
+      <div class="count-up-wrap" on-click={this.click}>
         <span id={this.eleId}></span>
       </div>
     );
